@@ -13,14 +13,18 @@ public class UserService {
     @Autowired
     private UserRepository userRepo;
 
-    // Register user (stores password as plain text)
+    // Register new user (plain-text password)
     public User register(User user) {
         return userRepo.save(user);
     }
 
-    // Login user by matching email and password directly
+    // Login user by email and password (plain-text)
     public Optional<User> login(String email, String password) {
         return userRepo.findByEmailAndPassword(email, password);
     }
-}
 
+    // Check if email already exists
+    public boolean emailExists(String email) {
+        return userRepo.findByEmail(email).isPresent();
+    }
+}
